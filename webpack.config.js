@@ -1,12 +1,12 @@
 const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
 const mf = require("@angular-architects/module-federation/webpack");
-const path = require("path");
+// const path = require("path");
 const share = mf.share;
 
 const sharedMappings = new mf.SharedMappings();
-sharedMappings.register(
-  path.join(__dirname, 'tsconfig.json'),
-  [/* mapped paths to share */]);
+// sharedMappings.register(
+//   path.join(__dirname, 'tsconfig.json'),
+//   [/* mapped paths to share */]);
 
 module.exports = {
   output: {
@@ -22,9 +22,9 @@ module.exports = {
       ...sharedMappings.getAliases(),
     }
   },
-  experiments: {
-    outputModule: true
-  },
+  // experiments: {
+  //   outputModule: true
+  // },
   plugins: [
     new ModuleFederationPlugin({
         // library: { type: "module" },
@@ -33,8 +33,14 @@ module.exports = {
         name: "microFrontendAngular",
         filename: "remoteEntry.js",
         exposes: {
-            './AppModule': './src/app/app.module.ts'
+            './AppModule': './/src/app/app.module.ts',
         },        
+        
+        // For hosts (please adjust)
+        // remotes: {
+        //     "mfe1": "http://localhost:3000/remoteEntry.js",
+
+        // },
 
         shared: share({
           "@angular/core": { singleton: true, strictVersion: true, requiredVersion: 'auto' }, 
@@ -45,7 +51,7 @@ module.exports = {
           // ...sharedMappings.getDescriptors()
         })
         
-    }),
-    sharedMappings.getPlugin()
+    })
+    // sharedMappings.getPlugin()
   ],
 };
