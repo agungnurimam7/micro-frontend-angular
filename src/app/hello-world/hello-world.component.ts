@@ -8,4 +8,8 @@ import { Component } from '@angular/core';
 })
 export class HelloWorldComponent {
 
+  ngOnInit(): void {
+    console.log('XXX Hello World');
+  }
+
 }
